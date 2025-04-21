@@ -1,0 +1,125 @@
+<!-- auth-service/public/login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSO Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 15px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .error {
+      color: red;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>SSO Login</h1>
+  <div id="loginForm">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" id="email" value="user@example.com">
+    </div>
+    <div class="form-group">
+      <label for="password">Password:</label>
+      <input type="password" id="password" value="password123">
+    </div>
+    <button onclick="login()">Login</button>
+    <div id="message" class="error"></div>
+  </div>
+
+  <script>
+    // Save redirect URL when the page loads
+    window.addEventListener('DOMContentLoaded', () => {
+      // Get the referring URL (where the user came from)
+      const referrer = document.referrer;
+      if (referrer && (
+          referrer.includes('localhost:3007') || 
+          referrer.includes('localhost:3008') ||
+          referrer.includes('localhost:3002') ||
+          referrer.includes('localhost:3003') ||
+          referrer.includes('localhost:3004') ||
+          referrer.includes('localhost:3005') ||
+          referrer.includes('localhost:3006')
+        )) {
+        localStorage.setItem('sso_redirect_url', referrer);
+      }
+    });
+
+    //Check for redirect URL in localStorage
+    const getRedirectUrl = () => {
+      const redirectUrl = localStorage.getItem('sso_redirect_url');
+      return redirectUrl || 'http://localhost:3002'; //Default to Service A if no redirect
+    };
+
+    async function login() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const messageEl = document.getElementById('message');
+      
+      try {
+        const response = await fetch('http://localhost:3001/api/auth/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          credentials: 'include', 
+          body: JSON.stringify({ email, password })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          messageEl.textContent = 'Login successful! Redirecting...';
+          messageEl.style.color = 'green';
+          
+          //Redirect to the original requested URL or default
+          const redirectUrl = getRedirectUrl();
+          localStorage.removeItem('sso_redirect_url'); //Clear stored URL
+          
+          setTimeout(() => {
+            window.location.href = redirectUrl;
+          }, 1000);
+        } else {
+          messageEl.textContent = data.message || 'Login failed';
+        }
+      } catch (error) {
+        messageEl.textContent = 'Network error, please try again';
+        console.error('Login error:', error);
+      }
+    }
+
+    //Auto-login with Enter key
+    document.getElementById('password').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        login();
+      }
+    });
+  </script>
+</body>
+</html>
