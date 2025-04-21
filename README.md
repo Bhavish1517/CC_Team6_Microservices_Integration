@@ -44,7 +44,7 @@ docker-compose build
 docker-compose up -d
 ```
 2. Open the Calendar microservice at [localhost:3000](http://localhost:3000/) and User progress management service at [localhost:8004/](http://localhost:8004/docs#/default)
-3. Open  ```http://localhost:8004/lab```s to fetch the labs created.
+3. Open  ```http://localhost:8004/labs``` to fetch the labs created.
 4. Use the ```localhost:3000/``` to see the GUI version of the calendar.
 5. Use the ```localhost:5000/api/events``` to find the lab events added to the calendar database.
 6. Once completed using you can stop the containers by running the following command in both terminals:
