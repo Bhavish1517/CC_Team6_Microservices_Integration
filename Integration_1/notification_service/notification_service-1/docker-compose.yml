@@ -7,9 +7,9 @@ services:
     environment:
       - SMTP_SERVER=smtp.gmail.com
       - SMTP_PORT=587
-      - SMTP_USERNAME=bhavishsample@gmail.com
-      - SMTP_PASSWORD=dxihutlygqgneutd
-      - SENDER_EMAIL=bhavishsample@gmail.com
+      - SMTP_USERNAME=<enter_senders_email/username_here>
+      - SMTP_PASSWORD=<enter_google_app_password_here>
+      - SENDER_EMAIL=<enter_senders_email_here>
     networks:
       - cloud-infra
 
