@@ -1,5 +1,10 @@
 # CC_Team6_Microservices_Integration
 
+### Integrations
+1. Cloud Storage with Notification Microservice (Team 10)
+2. Calender with User Progress Management Service (Team 13)
+3. SSO with Certificate and Interactive Tutotrials Microservices (Team 19)
+
 ## Integration 1
 ### Cloud Storage microservice with Notification microservice
 
