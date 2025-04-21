@@ -3,9 +3,9 @@
 ## Integration 1
 ### Cloud Storage microservice with Notification microservice
 
-The **Cloud Storage Microservice** is responsible for managing file operations such as upload, download, view, and delete. It is built using FastAPI and integrated with AWS S3 to handle file storage. The service enforces per-user storage quotas and sends alerts when users exceed 80% of their assigned quota. It also supports file uploads with folder structures.
+The **Cloud Storage Microservice** is responsible for managing file operations such as upload, download, view, and delete. It is built using FastAPI and integrated with AWS S3 to handle file storage. The service enforces per-user storage quotas and sends alerts when users exceed 80% of their assigned quota.
 
-The Notification Microservice is a lightweight Flask application that handles email notifications and scheduled reminders. It supports sending immediate email alerts and allows users to set future reminders. It uses SMTP (Gmail SMTP by default) to send emails.
+The Notification Microservice is a Flask application that handles email notifications and scheduled reminders. It uses SMTP (Gmail SMTP by default) to send emails.
 
 The Integration between the two microservices is achieved through inter-service HTTP API communication. When the Cloud Storage Microservice detects that a user's storage usage exceeds the defined threshold (e.g., 80%), it makes a POST request to the Notification Microservice's /send_notification endpoint, triggering an email alert to the user. The two services run in isolated containers and are connected through a shared Docker network.
 
