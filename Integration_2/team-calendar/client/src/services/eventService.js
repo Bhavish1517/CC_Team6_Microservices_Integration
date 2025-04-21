@@ -61,7 +61,7 @@ export const deleteEvent = async (id) => {
 
 
 export const syncLabsToCalendar = async () => {
-  const res = await axios.get('/api/sync-labs');
+  const res = await axios.get(`/api/sync-labs`);
   console.log(res);
   return res.data;
 };
