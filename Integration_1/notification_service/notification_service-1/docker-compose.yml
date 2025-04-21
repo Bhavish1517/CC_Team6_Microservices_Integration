@@ -1,0 +1,18 @@
+version: '3.8'
+services:
+  notification-service:
+    build: .
+    ports:
+      - "5000:5000"
+    environment:
+      - SMTP_SERVER=smtp.gmail.com
+      - SMTP_PORT=587
+      - SMTP_USERNAME=bhavishsample@gmail.com
+      - SMTP_PASSWORD=dxihutlygqgneutd
+      - SENDER_EMAIL=bhavishsample@gmail.com
+    networks:
+      - cloud-infra
+
+networks:
+  cloud-infra:
+    external: true

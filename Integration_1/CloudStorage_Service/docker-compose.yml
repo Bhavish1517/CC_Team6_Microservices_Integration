@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  backend:
+    build: .
+    container_name: cloud-storage-backend
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    networks:
+      - cloud-infra
+    command: ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: cloud-storage-frontend
+    ports:
+      - "80:80"
+    networks:
+      - cloud-infra
+    depends_on:
+      - backend
+
+networks:
+  cloud-infra:
+    external: true

@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.sqlite3
+*.log
+.env
+.env.*
+*.db
+
+# VSCode or PyCharm config
+.vscode/
+.idea/
+
+# Docker
+*.pid
+*.pid.lock
+
+# React
+CloudStorage/frontend/node_modules/
+CloudStorage/frontend/build/
+CloudStorage/.env
+
+# Mac/Linux/Windows junk
+.DS_Store
+Thumbs.db
