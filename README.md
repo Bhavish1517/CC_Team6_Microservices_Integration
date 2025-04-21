@@ -31,11 +31,70 @@ docker-compose down
 ## Integration 2
 ### Calendar Microservice with User Progress Management Microservice
 
-The Calendar Microservice is developed using React and JavaScript and provides a user-friendly frontend interface for managing events. It exposes RESTful API endpoints (GET, POST, DELETE) to create, update, and delete calendar events. All event data is stored in a MongoDB cluster to ensure scalability and efficient data handling.
+## Overview: Calendar & User Progress Microservices
 
-The User Progress Management Microservice is built using FastAPI and offers endpoints for managing users, labs, and their progress. It supports create, retrieve, and delete operations, enabling seamless tracking of user activity across various labs.
+This system comprises two interlinked microservices to manage lab resources and calendar events. It demonstrates seamless synchronization and REST API integration between a FastAPI-based backend and a React-based frontend.
 
-The integration between the two microservices is achieved through inter-service HTTP API communication. When labs are added or deleted via the User Progress Management Microservice, the Calendar Microservice sends a GET request to the /labs/ endpoint to fetch the current list of labs. It then compares the list with its own database—new labs are added as calendar events, while removed labs are deleted from the calendar database.
+---
+
+## System Overview
+
+### Calendar Microservice
+
+- **Frontend:** React + JavaScript  
+- **Database:** MongoDB Cluster  
+- **API Methods:** `GET`, `POST`, `DELETE`  
+
+**Functionality:**
+- Create, update, and delete calendar events  
+- Sync calendar events based on lab data from the backend
+
+---
+
+### User Progress Management Microservice
+
+- **Backend:** FastAPI  
+- **Endpoints for:**
+  - Managing users
+  - Managing labs
+  - Tracking user progress  
+- **Supports:** `POST`, `GET`, and `DELETE` operations  
+
+**Role:**
+- Tracks user activity and lab creation/deletion
+
+---
+
+## Integration Mechanism
+
+Communication between the two services is done via inter-service HTTP APIs.
+
+**Sync Logic:**
+- When a lab is added or deleted:
+  - The Calendar Microservice makes a `GET /labs/` request to the User Progress Management Microservice
+  - It compares the updated labs list with its local event data
+  - **Adds** new labs as calendar events
+  - **Deletes** removed labs from the calendar database
+
+---
+
+## In-Depth Behavior
+
+- The **Calendar Microservice** provides a user-friendly interface for managing events.
+  - Built using React + JavaScript
+  - Exposes RESTful API endpoints (`GET`, `POST`, `DELETE`)
+  - Stores all event data in a scalable MongoDB cluster
+
+- The **User Progress Management Microservice** is designed for managing users and labs.
+  - Developed with FastAPI
+  - Handles create, retrieve, and delete operations
+  - Enables seamless tracking of lab-related activity
+
+- Inter-service synchronization ensures the calendar reflects all current labs.
+  - Calendar fetches the `/labs/` list
+  - **New labs** → Added to the calendar  
+  - **Deleted labs** → Removed from the calendar
+
 
 #### Setup and Run Instructions
 1. Open terminals in the respective microservice folders and in both the terminals run the following commands:
